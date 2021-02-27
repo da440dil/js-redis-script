@@ -1,7 +1,7 @@
 # js-redis-script
 
-[![Build Status](https://travis-ci.com/da440dil/js-redis-script.svg?branch=master)](https://travis-ci.com/da440dil/js-redis-script)
-[![Coverage Status](https://coveralls.io/repos/github/da440dil/js-redis-script/badge.svg?branch=master)](https://coveralls.io/github/da440dil/js-redis-script?branch=master)
+[![Build Status](https://travis-ci.com/da440dil/js-redis-script.svg?branch=main)](https://travis-ci.com/da440dil/js-redis-script)
+[![Coverage Status](https://coveralls.io/repos/github/da440dil/js-redis-script/badge.svg?branch=main)](https://coveralls.io/github/da440dil/js-redis-script?branch=main)
 
 Optimistic [Redis](https://redis.io/) script runner.
 
