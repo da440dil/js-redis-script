@@ -1,7 +1,7 @@
 {
   "name": "js-redis-script",
   "version": "0.0.0",
-  "description": "Optimistic Redis script runner",
+  "description": "Redis script runner",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",

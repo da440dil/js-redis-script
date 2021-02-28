@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/da440dil/js-redis-script.svg?branch=main)](https://travis-ci.com/da440dil/js-redis-script)
 [![Coverage Status](https://coveralls.io/repos/github/da440dil/js-redis-script/badge.svg?branch=main)](https://coveralls.io/github/da440dil/js-redis-script?branch=main)
 
-Optimistic [Redis](https://redis.io/) script runner.
+[Redis](https://redis.io/) script runner. It optimistically uses EVALSHA to run the script. If script does not exist it retries using EVAL.
 
 [Example](./src/examples/example.ts) usage:
 
