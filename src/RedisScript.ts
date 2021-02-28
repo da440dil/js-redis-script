@@ -20,7 +20,8 @@ export class RedisScript<T> {
         this.hash = createHash('sha1').update(src).digest('hex');
     }
     /**
-     * Optimistically uses EVALSHA to run the script. If script does not exist it is retried using EVAL.
+     * Run optimistically uses [EVALSHA](https://redis.io/commands/evalsha) to run the script.
+     * If script does not exist it is retried using [EVAL](https://redis.io/commands/eval).
      */
     public async run(...args: (string | number)[]): Promise<T> {
         try {
