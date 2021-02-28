@@ -1,5 +1,5 @@
 {
-  "name": "js-redis-script",
+  "name": "@da440dil/js-redis-script",
   "version": "0.0.1",
   "description": "Redis script runner",
   "main": "lib/index.js",

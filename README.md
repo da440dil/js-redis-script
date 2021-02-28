@@ -11,7 +11,7 @@ If script does not exist it retries using [EVAL](https://redis.io/commands/eval)
 
 ```typescript
 import { createClient } from 'redis';
-import { RedisScript } from 'js-redis-script';
+import { RedisScript } from '@da440dil/js-redis-script';
 
 async function main() {
     const client = createClient();
