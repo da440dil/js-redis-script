@@ -2,21 +2,21 @@ import { createClient } from 'redis';
 import { RedisScript } from '..';
 
 async function main() {
-    const client = createClient();
-    const script = new RedisScript({
-        client,
-        src: 'return redis.call("ping")'
-    });
+	const client = createClient();
+	const script = new RedisScript({
+		client,
+		src: 'return redis.call("ping")'
+	});
 
-    const res = await script.run(0);
-    console.log('PING', res);
-    // Output:
-    // PING PONG
+	const res = await script.run(0);
+	console.log('PING', res);
+	// Output:
+	// PING PONG
 
-    client.quit();
+	client.quit();
 }
 
 main().catch((err) => {
-    console.error(err);
-    process.exit(1);
+	console.error(err);
+	process.exit(1);
 });
