@@ -13,7 +13,7 @@ describe('RedisScript', () => {
 	});
 
 	it('should run script', async () => {
-		await expect(script.run(0)).resolves.toBe('PONG');
+		await expect(script.run()).resolves.toBe('PONG');
 	});
 
 	it('should load script', async () => {
@@ -25,6 +25,10 @@ describe('RedisScript', () => {
 				resolve(res);
 			});
 		})).resolves.toEqual([1]);
+	});
+
+	it('should run script again', async () => {
+		await expect(script.run()).resolves.toBe('PONG');
 	});
 
 	it('should handle errors', async () => {

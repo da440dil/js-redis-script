@@ -20,7 +20,7 @@ async function main() {
         src: 'return redis.call("ping")'
     });
 
-    const res = await script.run(0);
+    const res = await script.run();
     console.log('PING', res);
     // Output:
     // PING PONG
