@@ -30,7 +30,7 @@ export class RedisScript<T> {
 	 * Run optimistically uses [EVALSHA](https://redis.io/commands/evalsha) to run the script.
 	 * If script does not exist it is retried using [EVAL](https://redis.io/commands/eval).
 	 */
-	public async run(...args: (string | number)[]): Promise<T> {
+	public run(...args: (string | number)[]): Promise<T> {
 		return new Promise((resolve, reject) => {
 			this.client.evalsha(this.hash, this.keysNum, ...args, (err, res) => {
 				if (err) {
