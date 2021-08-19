@@ -1,6 +1,6 @@
 {
   "name": "@da440dil/js-redis-script",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Redis script runner",
   "main": "lib/index.js",
   "scripts": {
@@ -12,8 +12,8 @@
     "prepublishOnly": "npm run build",
     "file": "ts-node",
     "coveralls": "jest --runInBand --coverage --coverageReporters=text-lcov | coveralls",
-	"benchmarks": "npm run file src/benchmarks/incrby-node-redis.ts && npm run file src/benchmarks/incrby-ioredis.ts",
-	"benchmarks:http": "npm run file src/benchmarks/incrby-http-node-redis.ts && npm run file src/benchmarks/incrby-http-ioredis.ts"
+    "benchmarks": "npm run file src/benchmarks/incrby-node-redis.ts && npm run file src/benchmarks/incrby-ioredis.ts",
+    "benchmarks:http": "npm run file src/benchmarks/incrby-http-node-redis.ts && npm run file src/benchmarks/incrby-http-ioredis.ts"
   },
   "keywords": [
     "redis",
