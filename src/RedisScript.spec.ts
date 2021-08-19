@@ -1,56 +1,74 @@
-import { createClient, Callback } from 'redis';
+import { createClient } from 'redis';
+import Redis from 'ioredis';
+import { Script } from './Script';
 import { RedisScript } from './RedisScript';
+import { IRedisClient } from './IRedisClient';
 
 describe('RedisScript', () => {
-	const client = createClient();
-	const script = new RedisScript({ client, src: 'return redis.call("ping")' });
-
-	beforeAll((cb) => {
-		client.script('flush', cb);
-	});
-	afterAll((cb) => {
-		client.quit(cb);
+	describe('with node-redis client', () => {
+		testFunc(createClient());
 	});
 
-	it('should run script', async () => {
-		await expect(script.run()).resolves.toBe('PONG');
-	});
-
-	it('should load script', async () => {
-		await expect(new Promise((resolve, reject) => {
-			client.script('exists', 'd1ba26e3351afe31c9d0b4f786e9dd5a661e6997', (err, res) => {
-				if (err) {
-					return reject(err);
-				}
-				resolve(res);
-			});
-		})).resolves.toEqual([1]);
-	});
-
-	it('should run script again', async () => {
-		await expect(script.run()).resolves.toBe('PONG');
-	});
-
-	it('should handle errors', async () => {
-		const evalshaMock = jest.spyOn(client, 'evalsha');
-		const someRedisErr = new Error('Some redis error');
-		evalshaMock.mockImplementation(mockCallback(someRedisErr, ''));
-		await expect(script.run(0)).rejects.toThrow(someRedisErr);
-
-		const noScriptErr = new Error('NOSCRIPT No matching script. Please use EVAL.');
-		evalshaMock.mockImplementation(mockCallback(noScriptErr, ''));
-		const evalMock = jest.spyOn(client, 'eval');
-		evalMock.mockImplementation(mockCallback(someRedisErr, ''));
-		await expect(script.run(0)).rejects.toThrow(someRedisErr);
+	describe('with ioredis client', () => {
+		testFunc(new Redis());
 	});
 });
 
-function mockCallback(err: Error | null, res: string) {
-	return (...args: (string | number | Callback<string>)[]): boolean => {
-		const cb = args[args.length - 1];
-		if (typeof cb === 'function') {
-			cb(err, res);
-		}
-		return false;
-	};
+type Callback = (err: Error | null) => void;
+
+interface IClient extends IRedisClient {
+	flushdb(callback: Callback): void;
+	quit(callback: Callback): void;
+}
+
+function testFunc(client: IClient): void {
+	beforeAll((done) => {
+		client.flushdb(done);
+	});
+
+	afterAll((done) => {
+		client.quit(done);
+	});
+
+	afterEach((done) => {
+		client.flushdb(done);
+	});
+
+	it('should run script with (key, arg)', async () => {
+		const src = 'return redis.call("incrby", KEYS[1], ARGV[1])';
+		const script = new RedisScript(new Script(client, src), 1);
+		const key1 = 'key1';
+
+		await expect(script.run(key1, 2)).resolves.toBe(2);
+		await expect(script.run(key1, 3)).resolves.toBe(5);
+	});
+
+	it('should run script with (key, arg, arg)', async () => {
+		const src = 'return redis.call("incrby", KEYS[1], ARGV[1]) + redis.call("incrby", KEYS[1], ARGV[2])';
+		const script = new RedisScript(new Script(client, src), 1);
+		const key1 = 'key1';
+
+		await expect(script.run(key1, 2, 3)).resolves.toBe(7);
+		await expect(script.run(key1, 4, 5)).resolves.toBe(23);
+	});
+
+	it('should run script with (key, key, arg)', async () => {
+		const src = 'return redis.call("incrby", KEYS[1], ARGV[1]) + redis.call("incrby", KEYS[2], ARGV[1])';
+		const script = new RedisScript(new Script(client, src), 2);
+		const key1 = 'key1';
+		const key2 = 'key2';
+
+		await expect(script.run(key1, key2, 2)).resolves.toBe(4);
+		await expect(script.run(key1, key2, 3)).resolves.toBe(10);
+	});
+
+	it('should run script with (key, key, arg, arg)', async () => {
+		const src = 'return redis.call("incrby", KEYS[1], ARGV[1]) + redis.call("incrby", KEYS[2], ARGV[2])';
+		const script = new RedisScript(new Script(client, src), 2);
+		const key1 = 'key1';
+		const key2 = 'key2';
+
+		await expect(script.run(key1, key2, 2, 3)).resolves.toBe(5);
+		await expect(script.run(key1, key2, 4, 5)).resolves.toBe(14);
+	});
 }

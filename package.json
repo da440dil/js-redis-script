@@ -4,14 +4,16 @@
   "description": "Redis script runner",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "jest --runInBand",
+    "test:coverage": "jest --runInBand --coverage",
     "lint": "eslint --ext .js,.ts src",
     "build": "rimraf lib && tsc -p tsconfig.build.json",
     "preversion": "npm run lint && npm run test",
     "prepublishOnly": "npm run build",
     "file": "ts-node",
-    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
+    "coveralls": "jest --runInBand --coverage --coverageReporters=text-lcov | coveralls",
+	"benchmarks": "npm run file src/benchmarks/incrby-node-redis.ts && npm run file src/benchmarks/incrby-ioredis.ts",
+	"benchmarks:http": "npm run file src/benchmarks/incrby-http-node-redis.ts && npm run file src/benchmarks/incrby-http-ioredis.ts"
   },
   "keywords": [
     "redis",
@@ -25,13 +27,17 @@
     "node": ">=10.0"
   },
   "devDependencies": {
+    "@types/autocannon": "^4.1.1",
+    "@types/ioredis": "^4.26.7",
     "@types/jest": "^26.0.22",
     "@types/node": "^16.0.0",
     "@types/redis": "^2.8.30",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
+    "autocannon": "^7.4.0",
     "coveralls": "^3.1.1",
     "eslint": "^7.30.0",
+    "ioredis": "^4.27.7",
     "jest": "^26.6.3",
     "redis": "^3.1.2",
     "rimraf": "^3.0.2",
