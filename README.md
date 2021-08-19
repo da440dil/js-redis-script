@@ -25,6 +25,10 @@ If script does not exist it retries using [EVAL](https://redis.io/commands/eval)
 	};
 	```
 
+	```
+	npm run examples:ping
+	```
+
 - [fizz-buzz](./src/examples/fizz-buzz.ts)
 	```typescript
 	import { createScript } from '@da440dil/js-redis-script';
@@ -55,6 +59,10 @@ If script does not exist it retries using [EVAL](https://redis.io/commands/eval)
 
 		await flushdb(client);
 	};
+	```
+
+	```
+	npm run examples:fizz-buzz
 	```
 
 - [fizz-buzz-batch](./src/examples/fizz-buzz-batch.ts)
@@ -91,6 +99,10 @@ If script does not exist it retries using [EVAL](https://redis.io/commands/eval)
 
 		await flushdb(client);
 	};
+	```
+
+	```
+	npm run examples:fizz-buzz-batch
 	```
 
 [Benchmarks](./src/benchmarks)
