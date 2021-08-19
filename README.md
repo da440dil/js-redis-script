@@ -68,7 +68,7 @@ If script does not exist it retries using [EVAL](https://redis.io/commands/eval)
 		const src = `
 			local vs = {}
 			for i = 1, table.getn(KEYS) do
-				local v = redis.call("incr", KEYS[1])
+				local v = redis.call("incr", KEYS[i])
 				if v % 15 == 0 then
 					vs[i] = "Fizz Buzz"
 				elseif v % 3 == 0 then
