@@ -110,7 +110,7 @@ If script does not exist it retries using [EVAL](https://redis.io/commands/eval)
 npm run benchmarks
 ```
 
-*Attention*: In the context of [HTTP request](https://nodejs.org/api/http.html#http_class_http_incomingmessage), 
-there is no difference between [simple script](./src/Script.ts) and [batch script](./src/BatchScript.ts) 
-because of performance of [HTTP server](https://nodejs.org/api/http.html#http_class_http_server). 
-Use [batch script](./src/BatchScript.ts) where it really improves performance.
+*Note*: When using [batch script](./src/BatchScript.ts) instead of [simple script](./src/Script.ts) 
+in the context of [HTTP request](https://nodejs.org/api/http.html#http_class_http_incomingmessage), 
+there is no performance gain because of performance of [HTTP server](https://nodejs.org/api/http.html#http_class_http_server). 
+Measure perfomance gained of using [batch script](./src/BatchScript.ts) in your particular case.

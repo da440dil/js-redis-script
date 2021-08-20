@@ -22,14 +22,14 @@ export const createScript = <T>({ client, src, numberOfKeys = 0, batch = false }
 	 */
 	numberOfKeys?: number;
 	/** 
-	 * The source code is a batch script, which means that the script knows the number of keys and values needed to make single call,
-	 * can parse an arbitrary number of arguments, and return an array containing the reply to each call.
+	 * The source code is a batch script, which means that the script must "know" the number of keys and values needed to make single operation,
+	 * must map an arbitrary number of arguments into keys and values needed to make each operation and must return an array containing the reply to each operation.
 	 * By default equals false.
 	 * 
-	 * *Attention*: In the context of [HTTP request](https://nodejs.org/api/http.html#http_class_http_incomingmessage),
-	 * there is no difference between simple script and batch script
-	 * because of performance of [HTTP server](https://nodejs.org/api/http.html#http_class_http_server).
-	 * Use batch script where it really improves performance.
+	 * *Note*: When using batch script instead of simple script
+	 * in the context of [HTTP request](https://nodejs.org/api/http.html#http_class_http_incomingmessage),
+	 * there is no performance gain because of performance of [HTTP server](https://nodejs.org/api/http.html#http_class_http_server). 
+	 * Measure perfomance gained of using batch script in your particular case.
 	 */
 	batch?: boolean;
 }): IRedisScript<T> => {
