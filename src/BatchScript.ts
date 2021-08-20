@@ -26,7 +26,10 @@ export class BatchScript<T> implements IScript<T> {
 				this.values = [];
 				this.callbacks = [];
 				this.numberOfCalls = 0;
-				this.script.run(args, (err, reply: T[] = []) => {
+				this.script.run(args, (err, reply?: T[]) => {
+					if (!Array.isArray(reply)) {
+						reply = [];
+					}
 					for (let i = 0; i < callbacks.length; i++) {
 						callbacks[i](err, reply[i]);
 					}
