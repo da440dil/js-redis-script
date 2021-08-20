@@ -1,6 +1,6 @@
 {
   "name": "@da440dil/js-redis-script",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Redis script runner",
   "main": "lib/index.js",
   "scripts": {
@@ -12,9 +12,9 @@
     "prepublishOnly": "npm run build",
     "file": "ts-node",
     "coveralls": "jest --runInBand --coverage --coverageReporters=text-lcov | coveralls",
-	"examples:ping": "npm run file src/examples/ping-node-redis.ts && npm run file src/examples/ping-ioredis.ts",
-	"examples:fizz-buzz": "npm run file src/examples/fizz-buzz-node-redis.ts && npm run file src/examples/fizz-buzz-ioredis.ts",
-	"examples:fizz-buzz-batch": "npm run file src/examples/fizz-buzz-batch-node-redis.ts && npm run file src/examples/fizz-buzz-batch-ioredis.ts",
+    "examples:ping": "npm run file src/examples/ping-node-redis.ts && npm run file src/examples/ping-ioredis.ts",
+    "examples:fizz-buzz": "npm run file src/examples/fizz-buzz-node-redis.ts && npm run file src/examples/fizz-buzz-ioredis.ts",
+    "examples:fizz-buzz-batch": "npm run file src/examples/fizz-buzz-batch-node-redis.ts && npm run file src/examples/fizz-buzz-batch-ioredis.ts",
     "benchmarks": "npm run file src/benchmarks/incrby-node-redis.ts && npm run file src/benchmarks/incrby-ioredis.ts",
     "benchmarks:http": "npm run file src/benchmarks/incrby-http-node-redis.ts && npm run file src/benchmarks/incrby-http-ioredis.ts"
   },
