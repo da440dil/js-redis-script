@@ -1,6 +1,6 @@
 import { createClient } from 'redis';
 import { httpServer } from './http-server';
-import { createScript } from '..';
+import { createScript } from '../src';
 
 async function main() {
 	const client = createClient();

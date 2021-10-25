@@ -1,4 +1,4 @@
-import { IRedisClient as IClient } from '..';
+import { IRedisClient as IClient } from '../src';
 
 export interface IRedisClient extends IClient {
 	flushdb(callback: (err: Error | null) => void): void;

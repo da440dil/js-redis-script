@@ -6,17 +6,17 @@
   "scripts": {
     "test": "jest --runInBand",
     "test:coverage": "jest --runInBand --coverage",
-    "lint": "eslint --ext .js,.ts src",
+    "lint": "eslint --ext .ts src examples benchmarks",
     "build": "rimraf lib && tsc -p tsconfig.build.json",
     "preversion": "npm run lint && npm run test",
     "prepublishOnly": "npm run build",
     "file": "ts-node",
     "coveralls": "jest --runInBand --coverage --coverageReporters=text-lcov | coveralls",
-    "examples:ping": "npm run file src/examples/ping-node-redis.ts && npm run file src/examples/ping-ioredis.ts",
-    "examples:fizz-buzz": "npm run file src/examples/fizz-buzz-node-redis.ts && npm run file src/examples/fizz-buzz-ioredis.ts",
-    "examples:fizz-buzz-batch": "npm run file src/examples/fizz-buzz-batch-node-redis.ts && npm run file src/examples/fizz-buzz-batch-ioredis.ts",
-    "benchmarks": "npm run file src/benchmarks/incrby-node-redis.ts && npm run file src/benchmarks/incrby-ioredis.ts",
-    "benchmarks:http": "npm run file src/benchmarks/incrby-http-node-redis.ts && npm run file src/benchmarks/incrby-http-ioredis.ts"
+    "examples:ping": "npm run file examples/ping-node-redis.ts && npm run file examples/ping-ioredis.ts",
+    "examples:fizz-buzz": "npm run file examples/fizz-buzz-node-redis.ts && npm run file examples/fizz-buzz-ioredis.ts",
+    "examples:fizz-buzz-batch": "npm run file examples/fizz-buzz-batch-node-redis.ts && npm run file examples/fizz-buzz-batch-ioredis.ts",
+    "benchmarks": "npm run file benchmarks/incrby-node-redis.ts && npm run file benchmarks/incrby-ioredis.ts",
+    "benchmarks:http": "npm run file benchmarks/incrby-http-node-redis.ts && npm run file benchmarks/incrby-http-ioredis.ts"
   },
   "keywords": [
     "redis",

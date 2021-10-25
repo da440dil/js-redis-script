@@ -1,6 +1,6 @@
 import { hrtime } from 'process';
 import { strictEqual } from 'assert';
-import { createScript, IRedisScript } from '..';
+import { createScript, IRedisScript } from '../src';
 import { IRedisClient, flush, flushdb, get } from './redis-client';
 
 export const app = async (clientName: string, client: IRedisClient): Promise<void> => {

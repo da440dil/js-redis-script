@@ -1,4 +1,4 @@
-import { IRedisClient as IClient } from '..';
+import { IRedisClient as IClient } from '../src';
 
 export interface IRedisClient extends IClient {
 	script(arg: string, callback: (err: Error | null) => void): void;

@@ -1,4 +1,4 @@
-import { IRedisClient, createScript } from '..';
+import { IRedisClient, createScript } from '../src';
 
 export const app = async (client: IRedisClient): Promise<void> => {
 	const src = 'return redis.call("ping")';

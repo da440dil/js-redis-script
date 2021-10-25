@@ -1,7 +1,7 @@
 import { createServer } from 'http';
 import { strictEqual } from 'assert';
 import autocannon from 'autocannon';
-import { createScript, IRedisScript } from '..';
+import { createScript, IRedisScript } from '../src';
 import { IRedisClient, flush, flushdb } from './redis-client';
 
 export const app = async (clientName: string, client: IRedisClient): Promise<void> => {
