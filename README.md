@@ -8,9 +8,9 @@
 It optimistically uses [EVALSHA](https://redis.io/commands/evalsha) to run the script. 
 If script does not exist it retries using [EVAL](https://redis.io/commands/eval).
 
-[Examples](./src/examples)
+[Examples](./examples)
 
-- [ping](./src/examples/ping.ts)
+- [ping](./examples/ping.ts)
 	```typescript
 	import { IRedisClient, createScript } from '@da440dil/js-redis-script';
 
@@ -29,7 +29,7 @@ If script does not exist it retries using [EVAL](https://redis.io/commands/eval)
 	npm run examples:ping
 	```
 
-- [fizz-buzz](./src/examples/fizz-buzz.ts)
+- [fizz-buzz](./examples/fizz-buzz.ts)
 	```typescript
 	import { createScript } from '@da440dil/js-redis-script';
 	import { IRedisClient, flushdb } from './redis-client';
@@ -65,7 +65,7 @@ If script does not exist it retries using [EVAL](https://redis.io/commands/eval)
 	npm run examples:fizz-buzz
 	```
 
-- [fizz-buzz-batch](./src/examples/fizz-buzz-batch.ts)
+- [fizz-buzz-batch](./examples/fizz-buzz-batch.ts)
 	```typescript
 	import { createScript } from '@da440dil/js-redis-script';
 	import { IRedisClient, flushdb } from './redis-client';
@@ -105,7 +105,7 @@ If script does not exist it retries using [EVAL](https://redis.io/commands/eval)
 	npm run examples:fizz-buzz-batch
 	```
 
-[Benchmarks](./src/benchmarks)
+[Benchmarks](./benchmarks)
 ```
 npm run benchmarks
 ```
