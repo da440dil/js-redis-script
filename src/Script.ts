@@ -21,7 +21,7 @@ export class Script<T> implements IScript<T> {
 				}
 				return callback(err);
 			}
-			callback(null, reply);
+			callback(null, reply as T);
 		});
 	}
 }
