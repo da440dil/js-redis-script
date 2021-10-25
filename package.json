@@ -1,6 +1,6 @@
 {
   "name": "@da440dil/js-redis-script",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Redis script runner",
   "main": "lib/index.js",
   "scripts": {
