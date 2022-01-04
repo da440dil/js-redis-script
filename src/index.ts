@@ -8,8 +8,8 @@ import { IRedisScript } from './IRedisScript';
 export { IRedisClient, INodeRedisClient, IRedisScript };
 
 /**
- * Creates script.
- * @param client Redis client: [node-redis](https://github.com/NodeRedis/node-redis) v3 or v4 or [ioredis](https://github.com/luin/ioredis) v4.
+ * Creates script with any of supported Redis clients.
+ * @param client Minimal Redis client interface: [node-redis](https://github.com/NodeRedis/node-redis) v3 or v4 or [ioredis](https://github.com/luin/ioredis) v4.
  * @param src Lua [script](https://redis.io/commands/eval) source code.
  * @param numberOfKeys The number of arguments that represent Redis [key names](https://redis.io/commands/eval#introduction-to-eval). By default equals 0.
  */
@@ -22,7 +22,7 @@ export const createScript = <T = unknown>(client: IRedisClient | INodeRedisClien
 
 /**
  * Creates script.
- * @param client Redis client: [node-redis](https://github.com/NodeRedis/node-redis) v4.
+ * @param client Minimal Redis client interface: [node-redis](https://github.com/NodeRedis/node-redis) v4.
  * @param src Lua [script](https://redis.io/commands/eval) source code.
  * @param numberOfKeys The number of arguments that represent Redis [key names](https://redis.io/commands/eval#introduction-to-eval). By default equals 0.
  */
@@ -41,7 +41,7 @@ export const redisScript = <T = unknown>(client: INodeRedisClient, src: string, 
  * there is no performance gain because of performance of [HTTP server](https://nodejs.org/api/http.html#http_class_http_server).
  * Measure perfomance gained of using batch script in your particular case.
  * 
- * @param client Redis client: [node-redis](https://github.com/NodeRedis/node-redis) v3 or [ioredis](https://github.com/luin/ioredis) v4.
+ * @param client Minimal Redis client interface: [node-redis](https://github.com/NodeRedis/node-redis) v3 or [ioredis](https://github.com/luin/ioredis) v4.
  * @param src Lua [script](https://redis.io/commands/eval) source code.
  * @param numberOfKeys The number of arguments that represent Redis [key names](https://redis.io/commands/eval#introduction-to-eval). By default equals 0.
  */

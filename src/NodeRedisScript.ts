@@ -31,7 +31,7 @@ export class NodeRedisScript<T> implements IRedisScript<T> {
 	}
 }
 
-/** Minimal [node-redis](https://github.com/NodeRedis/node-redis) v4 client interface. */
+/** Minimal Redis client interface: [node-redis](https://github.com/NodeRedis/node-redis) v4. */
 export interface INodeRedisClient {
 	EVALSHA(sha1: string, options?: EvalOptions): Promise<unknown>;
 	EVAL(script: string, options?: EvalOptions): Promise<unknown>;
