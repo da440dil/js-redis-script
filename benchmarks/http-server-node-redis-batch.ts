@@ -1,6 +1,6 @@
-import { createClient } from 'redis';
+import { createClient } from 'redis-v3';
 import { httpServer } from './http-server';
-import { createScript } from '../src';
+import { batchScript } from '../src';
 
 async function main() {
 	const client = createClient();
@@ -20,7 +20,7 @@ async function main() {
 		end
 		return vs
 	`;
-	const script = createScript<number>({ client, src, numberOfKeys: 1, batch: true });
+	const script = batchScript<number>(client, src, 1);
 	const key = 'test';
 	const value = 1;
 	const server = httpServer(() => script.run(key, value));

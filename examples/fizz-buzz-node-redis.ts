@@ -1,4 +1,4 @@
-import { createClient } from 'redis';
+import { createClient } from 'redis-v3';
 import { app } from './fizz-buzz';
 
 async function main() {

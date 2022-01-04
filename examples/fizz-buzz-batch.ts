@@ -1,4 +1,4 @@
-import { createScript } from '../src';
+import { batchScript } from '../src';
 import { IRedisClient, flushdb } from './redis-client';
 
 export const app = async (client: IRedisClient): Promise<void> => {
@@ -20,7 +20,7 @@ export const app = async (client: IRedisClient): Promise<void> => {
 		end
 		return vs
 	`;
-	const script = createScript({ client, src, numberOfKeys: 1, batch: true });
+	const script = batchScript(client, src, 1);
 	const key = 'test';
 
 	const replies = await Promise.all(Array.from({ length: 15 }, () => script.run(key)));

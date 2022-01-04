@@ -1,4 +1,4 @@
-import { createClient } from 'redis';
+import { createClient } from 'redis-v3';
 import { app } from './ping';
 
 async function main() {

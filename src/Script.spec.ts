@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createClient } from 'redis';
+import { createClient } from 'redis-v3';
 import Redis from 'ioredis';
 import { Script } from './Script';
 import { IRedisClient } from './IRedisClient';

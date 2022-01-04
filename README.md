@@ -8,109 +8,33 @@
 It optimistically uses [EVALSHA](https://redis.io/commands/evalsha) to run the script. 
 If script does not exist it retries using [EVAL](https://redis.io/commands/eval).
 
-[Examples](./examples)
+Supported Redis clients: [node-redis](https://github.com/NodeRedis/node-redis) v3 and v4, [ioredis](https://github.com/luin/ioredis) v4.
 
-- [ping](./examples/ping.ts)
-	```typescript
-	import { IRedisClient, createScript } from '@da440dil/js-redis-script';
+[Example](./examples/ping-node-redis-v4.ts) usage with [node-redis](https://github.com/NodeRedis/node-redis) v4:
+```typescript
+import { createClient } from 'redis';
+import { createScript } from '@da440dil/js-redis-script';
 
-	export const app = async (client: IRedisClient): Promise<void> => {
-		const src = 'return redis.call("ping")';
-		const script = createScript({ client, src });
+async function main() {
+	const client = createClient();
+	await client.connect();
 
-		const reply = await script.run();
-		console.log('PING', reply);
-		// Output:
-		// PING PONG
-	};
-	```
+	const script = createScript(client, 'return redis.call("ping")');
+	const reply = await script.run();
+	console.log('PING', reply);
+	// Output:
+	// PING PONG
 
-	```
-	npm run examples:ping
-	```
+	await client.quit();
+}
 
-- [fizz-buzz](./examples/fizz-buzz.ts)
-	```typescript
-	import { createScript } from '@da440dil/js-redis-script';
-	import { IRedisClient, flushdb } from './redis-client';
-
-	export const app = async (client: IRedisClient): Promise<void> => {
-		await flushdb(client);
-
-		const src = `
-			local v = redis.call("incr", KEYS[1])
-			if v % 15 == 0 then
-				return "Fizz Buzz"
-			elseif v % 3 == 0 then
-				return "Fizz"
-			elseif v % 5 == 0 then
-				return "Buzz"
-			else
-				return v
-			end
-		`;
-		const script = createScript({ client, src, numberOfKeys: 1 });
-		const key = 'test';
-
-		const replies = await Promise.all(Array.from({ length: 15 }, () => script.run(key)));
-		console.log(replies.join(', '));
-		// Output:
-		// 1, 2, Fizz, 4, Buzz, Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, Fizz Buzz
-
-		await flushdb(client);
-	};
-	```
-
-	```
-	npm run examples:fizz-buzz
-	```
-
-- [fizz-buzz-batch](./examples/fizz-buzz-batch.ts)
-	```typescript
-	import { createScript } from '@da440dil/js-redis-script';
-	import { IRedisClient, flushdb } from './redis-client';
-
-	export const app = async (client: IRedisClient): Promise<void> => {
-		await flushdb(client);
-
-		const src = `
-			local vs = {}
-			for i = 1, table.getn(KEYS) do
-				local v = redis.call("incr", KEYS[i])
-				if v % 15 == 0 then
-					vs[i] = "Fizz Buzz"
-				elseif v % 3 == 0 then
-					vs[i] = "Fizz"
-				elseif v % 5 == 0 then
-					vs[i] = "Buzz"
-				else
-					vs[i] = v
-				end
-			end
-			return vs
-		`;
-		const script = createScript({ client, src, numberOfKeys: 1, batch: true });
-		const key = 'test';
-
-		const replies = await Promise.all(Array.from({ length: 15 }, () => script.run(key)));
-		console.log(replies.join(', '));
-		// Output:
-		// 1, 2, Fizz, 4, Buzz, Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, Fizz Buzz
-
-		await flushdb(client);
-	};
-	```
-
-	```
-	npm run examples:fizz-buzz-batch
-	```
+main().catch((err) => {
+	console.error(err);
+	process.exit(1);
+});
+```
 
 [Benchmarks](./benchmarks)
 ```
 npm run benchmarks
 ```
-
-*Note*: When using [batch script](./src/BatchScript.ts) instead of [simple script](./src/Script.ts) 
-in the context of [HTTP request](https://nodejs.org/api/http.html#http_class_http_incomingmessage), 
-there is no performance gain because of performance of [HTTP server](https://nodejs.org/api/http.html#http_class_http_server). 
-Measure perfomance gained of using [batch script](./src/BatchScript.ts) in your particular case.

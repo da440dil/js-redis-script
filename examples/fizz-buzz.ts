@@ -16,7 +16,7 @@ export const app = async (client: IRedisClient): Promise<void> => {
 			return v
 		end
 	`;
-	const script = createScript({ client, src, numberOfKeys: 1 });
+	const script = createScript(client, src, 1);
 	const key = 'test';
 
 	const replies = await Promise.all(Array.from({ length: 15 }, () => script.run(key)));

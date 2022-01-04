@@ -11,25 +11,18 @@ export const app = async (clientName: string, client: IRedisClient): Promise<voi
 	const value = 1;
 	const batchSize = parseInt(process.env.BENCHMARK_BATCH_SIZE || '10000', 10);
 
-	const simpleScript = createScript({
-		client,
-		src: 'return redis.call("incrby", KEYS[1], ARGV[1])',
-		numberOfKeys: 1
-	});
+	const simpleScriptSrc = 'return redis.call("incrby", KEYS[1], ARGV[1])';
+	const simpleScript = createScript(client, simpleScriptSrc, 1);
 	const simpleScriptTime = await test(client, simpleScript, key, value, batchSize);
 
-	const batchScript = createScript({
-		client,
-		src: `
-			local vs = {}
-			for i = 1, table.getn(KEYS) do
-				vs[i] = redis.call("incrby", KEYS[i], ARGV[i])
-			end
-			return vs
-		`,
-		numberOfKeys: 1,
-		batch: true
-	});
+	const batchScriptSrc = `
+		local vs = {}
+		for i = 1, table.getn(KEYS) do
+			vs[i] = redis.call("incrby", KEYS[i], ARGV[i])
+		end
+		return vs
+	`;
+	const batchScript = createScript(client, batchScriptSrc, 1);
 	const batchScriptTime = await test(client, batchScript, key, value, batchSize);
 
 	console.log('Benchmarks results with "%s" client:', clientName);

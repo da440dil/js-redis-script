@@ -1,5 +1,5 @@
 import autocannon from 'autocannon';
-import { createClient } from 'redis';
+import { createClient } from 'redis-v3';
 import { httpServer } from './http-server';
 import { createScript } from '../src';
 
@@ -8,7 +8,7 @@ async function main() {
 	client.flushdb();
 
 	const src = 'return redis.call("incrby", KEYS[1], ARGV[1])';
-	const script = createScript<number>({ client, src, numberOfKeys: 1 });
+	const script = createScript<number>(client, src, 1);
 	const key = 'test';
 	const value = 1;
 	const server = httpServer(() => script.run(key, value));
